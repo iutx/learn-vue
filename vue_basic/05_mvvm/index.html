@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mvvm</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        1. MVVM:
+            1. M: Model, e.g. data
+            2. V: View e.g. template
+            3. VM: ViewModel, e.g. vue instance
+        2. VM like a bridge between M and V.
+            1. M -> VM -> V
+            2. V -> VM -> M
+    -->
+    <div id="root">
+        <!--View-->
+        <h1>School name: {{school.name}}</h1>
+        <h1>School address: {{school.address}}</h1>
+    </div>
+    
+    <script>
+        Vue.config.productionTip = false;
+
+        // create instance
+        // because of VM, normal call instance name is vm
+        new Vue({ // View Model
+            el: '#root',
+            data: { // Model
+               school: {
+                   name: "SomeSchool",
+                   address: "SomeWhere"
+               }
+            }
+        })
+    </script>
+</body>
+</html>

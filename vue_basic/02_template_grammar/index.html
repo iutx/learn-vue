@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue template grammar</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>Interpolation (parse content of tag body)</h1>
+        <h3>Hello {{name}}</h3>
+        <hr>
+        <h1>Instruction (parse attribute of tag)</h1>
+        <!-- 
+            1. :href="url" == v-bind:href="url"  
+            2. also support js expression, e.g. url.toUpperCase()
+        -->
+        <a :href="url">search</a>
+        <a :href="game.url">game</a>
+        <hr>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        // create vue instance
+        new Vue({
+            el: '#root',  // element to mount, #->id .->class
+            data: {
+                name: 'Jack',
+                url: "https://google.com",
+                game: {
+                    url: "https://steampowered.com",
+                }
+            }
+        })
+    </script>
+</body>
+</html>

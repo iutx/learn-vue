@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>data bind</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!--if input value changed, data.name doesn't follow change-->
+        One-way data binding: <input type="text" :value="name"> <br />
+
+        <!--
+            1. v-model will change data.name, v-bind above will change as well
+            2. v-model only used for form type. v-model manage value
+            3. short: v-model:value="name" -> v-model="name"
+        -->
+        Two-way data binding: <input type="text" v-model:value="name">
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+        new Vue({
+            el: '#root',
+            data: {
+                name: 'Jack'
+            }
+        })
+    </script>
+</body>
+</html>

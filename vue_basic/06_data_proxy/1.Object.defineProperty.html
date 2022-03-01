@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object.defineProperty</title>
+</head>
+<body>
+    <script>
+        let person = {
+           name: 'tim',
+           sex: 'man',
+        }
+        Object.defineProperty(person,'age', {
+            value: 18
+        })
+        console.log(person)
+        // age append with defineProperty, can't foreach.
+        // result: 0: "name", 1: "sex", length: 2
+        console.log(Object.keys(person))
+
+        // use defineProperty, beijing and persion bound
+        let beijing = "beijing"
+        Object.defineProperty(person,'address', {
+            // value: 'china',
+            // enumerable: true, // console attribute enumerable or not, default false.
+            // writable: true, // console attribute writable or not. default false, means person.address="xxx" can't change person's address.
+            // configurable: true, // console attribute configurable or not. default false, means delete person.address can't delete it.
+            // call when use persion.address and return address value
+            get: function(){
+                return beijing
+            },
+            // call when change address's value. and recive new value.
+            set(value) {
+                console.log(value)
+                beijing = value
+            }
+        })
+        // use enumerable can forearch apended key.
+        console.log(Object.keys(person))
+    </script>
+</body>
+</html>

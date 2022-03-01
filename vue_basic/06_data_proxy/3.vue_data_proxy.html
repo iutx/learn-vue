@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue data proxy</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- if doesn't have data proxy -->
+        <h2>username: {{_data.username}}</h2>
+        <h2>password: {{_data.password}}</h2>
+
+        <!--
+            use data proxy
+            vm _data.username will binding to vm username
+            operator vm username will change vm _data username
+            use Object.defineProperty to impl it, for coding purposes, {{username}} more easy.
+        -->
+        <h2>username: {{username}}</h2>
+        <h2>password: {{password}}</h2>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+             // if want to verify data info, use vm._data can operator (learning stage)
+             // normal use vm.username 
+            data: {
+                username: 'root',
+                password: 'root',
+            }
+        })
+    </script>
+
+<!--
+vm:
+Vue {_uid: 0, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+.....ignore
+password: (...)   // password -> getter/setter <- data.password
+username: (...)   // username -> getter/setter <- data.username
+.....ignore
+get $attrs: ƒ reactiveGetter()
+set $attrs: ƒ reactiveSetter(newVal)
+get $listeners: ƒ reactiveGetter()
+set $listeners: ƒ reactiveSetter(newVal)
+get password: ƒ proxyGetter()
+set password: ƒ proxySetter(val)
+get username: ƒ proxyGetter()
+set username: ƒ proxySetter(val)
+[[Prototype]]: Object
+-->
+</body>
+</html>

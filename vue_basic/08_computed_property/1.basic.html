@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>computed property</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    
+    <div id="root">
+    <h2>use data binding</h2> 
+    first name: <input type="text" v-model="firstName"><br />
+    last name: <input type="text" v-model="lastName">
+    <!--if compute logic too many, will read hard-->
+    <p>full name: {{firstName.slice(0,3)}}.{{ lastName }}</p>
+    <hr />
+
+    <h2>use method</h2>
+    first name: <input type="text" v-model="firstName"><br />
+    last name: <input type="text" v-model="lastName">
+    <p>full name: {{computedFullName()}}</p>
+    <hr />
+    
+    <h2>use computed</h2>
+    first name: <input type="text" v-model="firstName"><br />
+    last name: <input type="text" v-model="lastName">
+    <p>full name: {{fullName}}</p>
+    <hr />
+
+    </div>
+    <script>
+        new Vue({
+            el: "#root",
+            data: {
+                firstName: "",
+                lastName: "",
+            },
+            methods: {
+                // if data changed, vue will render templeate again, method will call again.
+                computedFullName(){
+                    return this.firstName.slice(0,3) + "." + this.lastName
+                }
+            },
+            // computed means: use your exited property to computation a new property.
+            // compared to methods, computed use cache, more faster.
+            computed: {
+                fullName: {
+                    // call times:
+                    // 1. read first, if common will use cache.
+                    // 2. data depends changed.
+                    get(){
+                        return this.firstName.slice(0,3) + "." + this.lastName
+                    },
+                    // if fullName will change, will implement set method.
+                    set(){
+
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

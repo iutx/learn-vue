@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>keyboard event</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!--
+            1. keydown: keydown event will trigger when key is pressed down.
+            2. keyup: keyup event will trigger when key is released.
+        -->
+        use key code judege:
+        <input type="text" placeholder="tip when push enter" @keyup="showInfoEnter"><br /><br />
+
+        <!--
+            enter
+            delete (delete or backspace)
+            esc
+            space
+            tab
+            up
+            down
+            left
+            right
+        -->
+        use vue keyboard alias:
+        <input type="text" placeholder="tip when push enter" @keyup.enter="showInfo"><br /><br />
+
+        test your custom keyboard's key and key code: 
+        <input type="text" placeholder="tip when push enter" @keyup="testKey"><br /><br />
+
+        if common use doesn't have, you can input test and get key name:
+        <!--
+            rules: if some key like CapsLock, you must convert to caps-lock, can use it.
+        -->
+        <input type="text" placeholder="tip when push enter" @keyup.caps-lock="showInfo"><br /><br />
+
+        <!--
+            1. system modifed key: alt, ctrl, shift, meta. 
+            keyup: must used in combination with other keys can trigger.
+            keydown: can trigger alone.
+            
+            2. if you want to use compose key, can use chain calls, e.g.
+               @keydown.ctrl.y.x="showInfo", ctrl + y + x will trigger.
+        -->
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+        new Vue({
+            el: "#root",
+            methods: {
+                showInfoEnter: function(event) {
+                    if (event.keyCode != 13) return 
+                    console.log(event.target.value);
+                },
+                showInfo: function(event){
+                    console.log(event.target.value);
+                },
+                testKey: function(e){
+                    console.log(e.key, e.keyCode);
+                }
+            },
+        })
+
+        // vue also support keyboard alias
+        // e.g.  @keydown.huiche same as @keydown.enter
+        Vue.config.keyCodes.huiche=13;
+    </script>
+</body>
+</html>

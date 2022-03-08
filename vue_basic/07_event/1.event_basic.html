@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>Welcome to {{place}}</h2>
+        <!-- 
+            1. v-on:click="showInfo": when click the button, the function showInfo 
+            will be called.
+            2. @ is short for v-on:   (: is short for v-bind:)
+        -->
+        <button v-on:click="showInfo">click</button>
+        <button @click="showInfo">click</button> <br />
+
+        <!---
+            1. call with paramter ()
+            2. $event is the event object, paramter can random
+        -->
+        <button @click="withParamter('yes',$event)">click with paramter</button>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+        
+        const vm = new Vue({
+            el: "#root",
+            data: {
+                place: "China",
+            },
+            // 1. methods if use => function, this will not vm or component instance object.
+            methods: {
+                showInfo: function(event){
+                    console.log(event); // event is the first parameter default.
+                    console.log(event.target.innerText); // event will get caller.
+                    console.log(this); // this is vm object
+                    alert("Welcome to " + this.place);
+                },
+                withParamter: function(param1, event) {
+                    alert("call with paramter " + param1);
+                    console.log(event);
+                }
+            },
+        })
+    </script>
+</body>
+</html>

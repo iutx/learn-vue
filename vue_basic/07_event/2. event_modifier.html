@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event modifier</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        * {
+            margin-top: 10px;
+        }
+
+        .div1{
+            padding: 20px;
+            background-color: #ff0;
+        }
+        .div2{
+            padding: 20px;
+            background-color: #e50;
+        }
+        .list{
+            height: 200px;
+            width: 100px;
+            padding: 0 20px;
+            background-color: peru;
+            overflow: auto;
+        }
+        li {
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!---
+            use click.prevent will hold back default event.
+            event.preventDefault() can do the same thing.
+            a will call showInfo and doesn't jump to the link.
+
+            usages:
+            1. prevent: hold back default event.
+            2. stop: hold back event bubbling.
+            3. once: event will trigger once.
+            4. capture: use event capture model.
+            5. self: event will trigger on the element operator itself current.
+            6. passive: event's behavior executed immediately, no need to wait for the practice callback to complete.
+
+            event can chain calls, e.g. @click.prevent.once.stop="showInfo"
+        -->
+        <!--prevent-->
+        <h2>prevent</h2>
+        <a href="https://www.baidu.com" @click.prevent="showInfo">click</a>
+        <hr />
+
+        <!--stop-->
+        <h2>stop</h2>
+        <div class="demo1" @click="showInfo">
+            dosn't use .stop when event bubbling, will alert twice: 
+            <button @click="showInfo">click</button><br />
+            use .stop to stop event bubbling: 
+            <button @click.stop="showInfo">click</button>
+        </div>
+        <hr />
+
+        <!--once-->
+        <h2>once</h2>
+        <button @click="showInfo">trigger times</button><br />
+        <button @click.once="showInfo">trigger once</button>
+        <hr />
+
+        <!--capture-->
+        <h2>capture</h2>
+        two stage:
+        1. capture stage: from out to inner
+        2. bubble stage: from inner to out
+        so click div2, will trigger div2's event first, then trigger div1's event.
+        <div class="div1" @click="showMsg('div1')">
+            div1
+            <div class="div2" @click="showMsg('div2')">
+                div2
+            </div>
+        </div><br />
+        use capture at div1, trigger order will same as capture order, click div1 will alert div1; click dive2 will alert div1 first, then alert div2. 
+        <div class="div1" @click.capture="showMsg('div1')">
+            div1
+            <div class="div2" @click="showMsg('div2')">
+                div2
+            </div>
+        </div>
+        <hr />
+
+        <!--self-->
+        <h2>self</h2>
+        <div class="demo1" @click="showInfo">
+            click button will trigger twice, div trigger beacause of event bubbling.
+            twice event, target all is button: 
+            <button @click="showInfo">click</button><br />
+        </div>
+        <div class="demo1" @click.self="showInfo">
+            if .self used on div, click will trigger once, target is button, not div: 
+            <button @click="showInfo">click</button><br />
+        </div>
+        <hr />
+
+        <!--passive-->
+        <h2>passive</h2>
+        <!--
+            1. scroll: scroll bar will trigger scroll event.
+            2. wheel: mouse wheel will trigger wheel event.
+
+            passive: 
+            e.g. wheel if doesn't set passive, scroll will execute function, then scroll bar
+            set passive, will scroll bar and execute function at the same time.
+
+            not all of component need passive, scroll event is not need passive.
+        -->
+        <ul @wheel.passive="scrollEvent" class="list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+    <script>
+        Vue.config.productionTip = false;
+
+        new Vue({
+            el: '#root',
+            data: {
+                place: "China"
+            },
+            methods: {
+                showInfo: function(event){
+                    // will hold back default event
+                    // event.preventDefault();
+                    alert("Welcome to " + this.place);
+                },
+                showMsg:function(param){
+                    alert(param)
+                },
+                scrollEvent: function(){
+                    
+                    console.log("callback done");
+                }
+            }
+        })
+    </script>
+</body>
+</html>

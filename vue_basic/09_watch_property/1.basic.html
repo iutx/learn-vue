@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>watch property</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>today weather: {{info}}</h2>
+        <button @click="changeWeather">change weather</button>
+        <!-- click also use expression -->
+        <!-- <button @click="isHot = !isHot">change weather</button> -->
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: "#root",
+            data: {
+                isHot: true
+            },
+            computed: {
+                info() {
+                    return this.isHot ? "hot" : "cold";
+                }
+            },
+            methods: {
+                changeWeather() {
+                    this.isHot = !this.isHot;
+                }
+            },
+            watch: {
+                isHot:{
+                    // if set, handler will call when initial.
+                    immediate: true,
+                    // if isHot changed, run this function
+                    handler(newValue, oldValue){
+                        console.log(newValue, oldValue);
+                    }
+                }
+            }
+        })
+
+        // vm all can use watch
+        vm.$watch('isHot', {
+            immediate: true,
+            handler(newValue, oldValue){
+                console.log(newValue, oldValue);
+            } 
+        })
+    </script>
+    
+</body>
+</html>

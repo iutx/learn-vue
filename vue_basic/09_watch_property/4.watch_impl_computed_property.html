@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>watch_impl_computed_property</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    
+    <div id="root">
+        first name: <input type="text" v-model="firstName"><br />
+        last name: <input type="text" v-model="lastName">
+        <p>full name: {{fullName}}</p>
+    </div>
+    <!-- 
+        computed vs watch:
+        1. use computed, must can use watch to instead.
+        2. use watch, dosn't use computed can complete, e.g. sync task
+        3. function managed by vue, use normal function better, then this will point vue or component.
+        4. function dosn't managed by vue, e.g. ticker、ajax, promise 
+           use => better, then this will point vue or component.
+     -->
+    <script>
+        new Vue({
+            el: "#root",
+            data: {
+                firstName: "",
+                lastName: "",
+                fullName: "",
+            },
+            watch: {
+                // one paramters will get new value.
+                firstName(val){
+                    // if doesn't have async task, computed better，if async, use wathc, e.g.
+                    // if =>, dosn't have this, will find outter, last find vm to this.
+                    setTimeout(() => {
+                        this.fullName = val + "." + this.lastName
+                    }, 1000);
+                },
+                lastName(val){
+                    this.fullName = this.firstName + "." + val
+                }       
+            }
+        })
+    </script>
+</body>
+</html>

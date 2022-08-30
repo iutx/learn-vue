@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue with css</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        .basic {
+            width: 400px;
+            height: 100px;
+            border: 1px solid black;
+        }
+        .normal {
+            background-color: navajowhite;
+        }
+
+        .happy {
+            background-color: brown;
+        }
+
+        .sad {
+            background-color: greenyellow;
+        }
+
+        .multi1{
+            background-color: aquamarine;
+        }
+
+        .multi2 {
+            border-radius: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!--
+            v-show: recived bool, DOM elements are not removed, only add display class
+        -->
+        <!--<h2 v-show="false">Welcome {{name}}</h2>-->
+        <!--<h2 v-show="1 === 1">Welcome {{name}}</h2>-->
+        <h2 v-show="showA">Welcome {{name}}</h2>
+        <hr>
+        
+        <!--
+            v-if: recived bool, will not render, DOM elements removed.
+        -->
+        <h2 v-if="false">Welcome {{name}}</h2>
+
+        <!--
+            click button to add 1 
+            - if change fast， use v-show better, if change slow, use v-if better.
+        -->
+        <h2>Current value: {{n}}</h2>
+        <button @click="n++">Click to add</button>
+
+        <!--
+            if else-if else can't insert other content, will break logic, split to multi logic
+        -->
+        <div v-if="n == 1">hello</div>
+        <div v-if="n == 2">world</div>
+        <div v-else-if="n == 3">use v-else-if</div>
+        <div v-else> use v-else </div>
+
+        <div v-show="n == 5">use v-show</div>
+
+        <!--
+            use template can multi change h2 with v-if
+            use template btter, div will change page struct, template doesn't effect.
+
+            template only use v-if, can't use v-show
+        -->
+        <template v-if="n == 1">
+            <h2>[1]multi change in template</h2>
+            <h2>[2]multi change in template</h2>
+            <h2>[3]multi change in template</h2>
+        </template>
+
+    </div>
+</body>
+    <script>
+        Vue.config.productionTip = false
+
+        new Vue({
+            el: '#root',
+            data: {
+                name: 'vip',
+                showA: true,
+                n: 0,
+            }
+        })
+
+    </script>
+</html>
